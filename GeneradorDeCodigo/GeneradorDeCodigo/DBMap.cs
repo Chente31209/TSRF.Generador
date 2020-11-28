@@ -7,5 +7,6 @@ namespace GeneradorDeCodigo
     public  class DBMap
     {
         public string Map { get; set; }
+        
     }
 }

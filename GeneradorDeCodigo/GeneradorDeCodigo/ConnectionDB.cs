@@ -26,6 +26,7 @@ namespace GeneradorDeCodigo
 								var values = new object[reader.FieldCount];
 								reader.GetValues(values);
 								Row.Add(string.Join("|", values));
+								
 							}
 						}
 					}

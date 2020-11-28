@@ -11,7 +11,61 @@ namespace GeneradorDeCodigo
         public Tables Parse(string Campo)
         {
             var tabla = Campo.Split("|");
-            return new Tables { Titule = tabla[0].Trim(), Columns = tabla[1].Trim() };
+            if (tabla[2] == "CHAR(1)")
+            {
+                if(tabla[3]== "NOT NULL")
+                    return new Tables { Titule = tabla[0].Trim(),
+                                        Columns = tabla[1].Trim(),
+                                        Type="char" ,
+                                        IsNull=false };
+                else
+                    return new Tables { Titule = tabla[0].Trim(),
+                                        Columns = tabla[1].Trim(), 
+                                        Type = "char?", 
+                                        IsNull=true };
+            }
+            if (tabla[2].Trim() == "INTEGER" || tabla[2].Trim().Contains("NUMERIC"))
+            {
+                if (tabla[3] == "NOT NULL")
+                    return new Tables { Titule = tabla[0].Trim(),  
+                                        Columns = tabla[1].Trim(),
+                                        Type = "int",
+                                        IsNull = false };
+                else
+                    return new Tables { Titule = tabla[0].Trim(),
+                                        Columns = tabla[1].Trim(),
+                                        Type = "int?",
+                                        IsNull= true };
+            }  
+
+            if (tabla[2].Trim() == "TIMESTAMP" || tabla[2].Trim() == "DATE")
+            {
+                if(tabla[3] == "NOT NULL")
+                    return new Tables { Titule = tabla[0].Trim(),
+                                        Columns = tabla[1].Trim(),
+                                        Type = "DateTime", 
+                                        IsNull = false };
+                else
+                    return new Tables { Titule = tabla[0].Trim(),   
+                                        Columns = tabla[1].Trim(),
+                                        Type = "DateTime?",
+                                        IsNull = true };
+            }
+            else
+            {
+                if (tabla[3] == "NOT NULL")
+                    return new Tables { Titule = tabla[0].Trim(),
+                                        Columns = tabla[1].Trim(), 
+                                        Type = "string",
+                                        IsNull = false };
+                else
+                    return new Tables { Titule = tabla[0].Trim(),
+                                        Columns = tabla[1].Trim(), 
+                                        Type = "string?", 
+                                        IsNull = true };
+            }
+                 
+
         }
         public List<Tables> Generate()
         {
@@ -24,15 +78,6 @@ namespace GeneradorDeCodigo
             return ListTables;
         }
 
-        public void show()
-        {
-            var lista = Generate().GroupBy(x=>x.Titule).Select(x=>x.FirstOrDefault());
-            
-
-            foreach (var i in lista)
-            {
-                Console.WriteLine(i.Titule);
-            }
-        }
+        
     }
 }
