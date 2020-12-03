@@ -9,9 +9,8 @@ namespace GeneradorDeCodigo
         {
             ShowAll showAll = new ShowAll();
             GenerateFileEnty generateFile = new GenerateFileEnty();
-
-            generateFile.CreateField(@"D:\", "CLIENTES");
-
+            GenerateFileMap generateFileMap = new GenerateFileMap();
+            generateFileMap.CreateField(@"D:\", "ZONAS_CLIENTES");
             if (args.Length == 0)
             {
                 Console.WriteLine($"Si no sabes como prosegir teclea -h o -help para ver las sentecias que exiten \n" +
@@ -21,10 +20,11 @@ namespace GeneradorDeCodigo
             {
                 if (args[0] == "-h" || args[0] == "-help")
                 {
-                    Console.WriteLine($" -m/-map \"<Nombre De la Tabla>\" *Te mostrara una Vista Previa De Un Map ");
-                    Console.WriteLine($" -e/-empty \"<Nombre De la Tabla>\" *Te mostrara una Vista Previa De Un Map ");
-                    Console.WriteLine($" -t/-tables \"<Nombre De la Tabla>\" *Te mostara un listado de las columnas  de una tabla e informasin de la misma \n " +
-                                      $" -t/-tables sin un parameto te mostrara los nombres de todas las tablas  ");
+                    Console.WriteLine($" -m/-map \"<Nombre De la Tabla>\" *Te mostrara una Vista Previa De Un Map "+
+                                      $" -e/-empty \"<Nombre De la Tabla>\" *Te mostrara una Vista Previa De Un Map "+
+                                      $" -t/-tables \"<Nombre De la Tabla>\" *Te mostara un listado de las columnas  de una tabla e informasin de la misma \n " +
+                                      $" -t/-tables sin un parameto te mostrara los nombres de todas las tablas  "+
+                                      $" -f/-file \"<Ruta>\" \"<Nombre de la tabla>\" *Te generar un archivo cs en la ruta indiada ");
                 }
                 if (args[0] == "-m" || args[0] == "-map")
                 {
@@ -44,6 +44,12 @@ namespace GeneradorDeCodigo
                     {
                         showAll.showNameTable();
                     }
+                }
+                if(args[0] == "-f" || args[0] == "-file")
+                {
+                    
+                    generateFile.CreateField(@"D:\01_Pruebas De GF", args[1]);
+                    generateFileMap.CreateField(@"D:\", args[1]);
                 }
 
             }

@@ -10,6 +10,7 @@ namespace GeneradorDeCodigo
         public string Columns { get; set; }
         public string Type { get; set; }
         public bool IsNull { get; set; }
+        
 
     }
 }

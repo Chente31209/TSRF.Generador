@@ -6,30 +6,28 @@ using System.Globalization;
 
 namespace GeneradorDeCodigo
 {
-    public class GenerateFileEnty
+    public class GenerateFileMap
     {
-        GenerateEntity generateEntity = new GenerateEntity();
-        GenetateTables genetateTables = new GenetateTables();
-
+        GenetrateMap Genetrate = new GenetrateMap();
         public void CreateField(string route, string Titulo)
         {
-            var Table = generateEntity.Generate(Titulo);
+            var Table =Genetrate.Generate(Titulo);
 
             var minusculas = LinqQueris.Tables(Titulo)[0].Titule.ToLower();
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(minusculas);
-            var path = $"{route}\\{Nombre}Entity.cs";
+            var path = $"{route}\\{Nombre}Map.cs";
 
             try
             {
                 // Create the file, or overwrite if the file exists.
                 using (FileStream fs = File.Create(path))
                 {
-                    byte[] info = new UTF8Encoding(true).GetBytes(Codigo.classEnty(Titulo));
+                    byte[] info = new UTF8Encoding(true).GetBytes(Codigo.classMap(Titulo));
                     // Add some information to the file.
                     fs.Write(info, 0, info.Length);
                 }
 
-                
+
             }
 
             catch (Exception ex)

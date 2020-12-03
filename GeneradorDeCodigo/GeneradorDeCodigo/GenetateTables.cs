@@ -69,7 +69,8 @@ namespace GeneradorDeCodigo
         }
         public List<Tables> Generate()
         {
-            var list = connection.ColumnDB(Sentences.ColumnAll());
+            var list = connection.Tabla(Sentences.ColumnAll());
+           
             List<Tables> ListTables = new List<Tables> { };
             foreach (var i in list)
             {

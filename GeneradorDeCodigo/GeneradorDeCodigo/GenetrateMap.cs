@@ -13,15 +13,21 @@ namespace GeneradorDeCodigo
         {
             DBMap dBMap = new DBMap();
             var tables = LinqQueris.Tables(Titule);
+            var key = LinqQueris.Keys(Titule);
+
+            
+            dBMaps.Add(new DBMap { Map = $"var {FormatWord.ParseMinusulas(Titule)} = modelBuilder.Entity<{Titule}Entity>();" });
+            dBMaps.Add(new DBMap { Map = $"{FormatWord.ParseMinusulas(Titule)}.HasKey(x => x.{FormatWord.ParseMinusulas(key.Titule)}).HasName(\"{key.Key}\");" });
             foreach (var i in tables)
             {
-                
-                var minusculas = i.Columns.ToLower();
-                var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(minusculas);
-                dBMaps.Add(new DBMap { Map = $"Clientes.Property(x => x.{Nombre}).HasColumnName(\"{i.Columns}\");" });
+                dBMaps.Add(new DBMap { Map = $"{FormatWord.ParseMinusulas(Titule)}.Property(x => x.{FormatWord.ParseMinusulas(i.Columns.ToLower())}).HasColumnName(\"{i.Columns}\");" });
             }
+            dBMaps.Add(new DBMap { Map = $"{FormatWord.ParseMinusulas(Titule)}.ToTable(\"{Titule}\");" });
+            // Moneda.ToTable("MONEDAS");
             return dBMaps;
         }
+
+       
         
     }
 }

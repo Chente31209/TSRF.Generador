@@ -8,7 +8,10 @@ namespace GeneradorDeCodigo
     public class ConnectionDB
     {
 		public List<String> Row { get; set; }
-        public  List<String> ColumnDB(string sentecia)
+		public List<String> key { get; set; }
+		public List<String> TablaRow { get; set; }
+
+		public  List<String> ColumnDB(string sentecia)
 		{
 			Row = new List<string> { };
 			using (var connection = new FbConnection(@"database=localhost:D:\PRUEBAWEBAPI.FDB;user=sysdba;password=masterkey"))
@@ -34,6 +37,26 @@ namespace GeneradorDeCodigo
 			}
 			return Row;
 		}
-	
-    }
+		public List<String> Tabla(string sentecia)
+        {
+			TablaRow = new List<String> { };
+            foreach (var i in ColumnDB(sentecia))
+            {
+				TablaRow.Add(i);
+            }
+            
+			return TablaRow;
+
+		}
+		public List<String> PrimaryKey(string sentecia)
+		{
+			key = new List<String> { };
+			foreach (var i in ColumnDB(sentecia))
+			{
+				key.Add(i);
+			}
+			return key;
+
+		}
+	}
 }

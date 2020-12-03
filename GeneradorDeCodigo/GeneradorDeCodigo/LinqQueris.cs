@@ -17,5 +17,16 @@ namespace GeneradorDeCodigo
             
             return getTable.ToList();
         }
+        public static PrimariKey Keys(string tableTituleKey)
+        {
+            GenerateKes generateKes = new GenerateKes();
+
+            var getTable = from table in generateKes.Gkeys()
+                           where table.Titule.StartsWith(tableTituleKey)
+                           select (table);
+
+            return getTable.FirstOrDefault();
+        }
+
     }
 }
