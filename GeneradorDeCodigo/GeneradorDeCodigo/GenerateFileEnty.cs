@@ -13,6 +13,19 @@ namespace GeneradorDeCodigo
 
         public void CreateField(string route, string Titulo)
         {
+            Create(route, Titulo);
+        }
+        public void CreateFieldAll(string route)
+        {
+            ShowAll showAll = new ShowAll();
+            foreach (var i in showAll.NameTable())
+            {
+                Create(route, i);
+            }
+        }
+
+        private  void Create(string route, string Titulo)
+        {
             var Table = generateEntity.Generate(Titulo);
 
             var minusculas = LinqQueris.Tables(Titulo)[0].Titule.ToLower();
@@ -29,7 +42,7 @@ namespace GeneradorDeCodigo
                     fs.Write(info, 0, info.Length);
                 }
 
-                
+
             }
 
             catch (Exception ex)

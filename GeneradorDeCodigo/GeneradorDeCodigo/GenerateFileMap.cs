@@ -11,7 +11,20 @@ namespace GeneradorDeCodigo
         GenetrateMap Genetrate = new GenetrateMap();
         public void CreateField(string route, string Titulo)
         {
-            var Table =Genetrate.Generate(Titulo);
+            Create(route, Titulo);
+        }
+        public void CreateFieldAll(string route)
+        {
+            ShowAll showAll = new ShowAll();
+            foreach(var i in showAll.NameTable())
+            {
+                Create(route, i);
+            }
+
+        }
+        private void Create(string route, string Titulo)
+        {
+            var Table = Genetrate.Generate(Titulo);
 
             var minusculas = LinqQueris.Tables(Titulo)[0].Titule.ToLower();
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(minusculas);
@@ -35,5 +48,6 @@ namespace GeneradorDeCodigo
                 Console.WriteLine(ex.ToString());
             }
         }
+
     }
 }

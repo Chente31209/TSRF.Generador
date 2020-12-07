@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace GeneradorDeCodigo
@@ -10,7 +11,8 @@ namespace GeneradorDeCodigo
         {
             List<string> Propiedades = new List<string> { };
             GenerateEntity generateEntity = new GenerateEntity();
-            string Enabesado = $"namespace <Nombre>{{\n public class {Titulo}Entity{{ ";
+            var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
+            string Enabesado = $"namespace <Nombre>{{\n public class {Nombre}Entity{{ ";
             string Cuerpo = "";
             foreach(var i in generateEntity.Generate(Titulo))
             {
@@ -26,17 +28,18 @@ namespace GeneradorDeCodigo
             GenetrateMap genetrateMap = new GenetrateMap();
 
             List<string> Propiedades = new List<string> { };
-            
-            string Enabesado = $"namespace <Nombre>{{\n public class {Titulo}Map{{ ";
+            var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
+            string Enabesado = $"Mappear (ModelBuilder modelBuilder){{ ";
             string Cuerpo = "";
             foreach (var i in genetrateMap.Generate(Titulo))
             {
                 Propiedades.Add($"{i.Map} \n");
             }
             Cuerpo = String.Join(' ', Propiedades);
-            string Fll = $"{Enabesado}\n {Cuerpo}\n }}\n}}";
+            string Fll = $"{Enabesado}\n {Cuerpo}\n }}";
             return Fll;
         }
 
     }
+    //var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase();
 }
