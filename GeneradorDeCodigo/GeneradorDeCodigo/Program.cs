@@ -7,10 +7,10 @@ namespace GeneradorDeCodigo
 
         static void Main(string[] args)
         {
+            
             ShowAll showAll = new ShowAll();
             GenerateFileEnty generateFile = new GenerateFileEnty();
             GenerateFileMap generateFileMap = new GenerateFileMap();
-            generateFileMap.CreateField(@"D:\", "ZONAS_CLIENTES");
             if (args.Length == 0)
             {
                 Console.WriteLine($"Si no sabes como prosegir teclea -h o -help para ver las sentecias que exiten \n" +
@@ -40,6 +40,7 @@ namespace GeneradorDeCodigo
                     {
                         showAll.showAllTable(args[1]);
                     }
+
                     else
                     {
                         showAll.showNameTable();
@@ -47,9 +48,16 @@ namespace GeneradorDeCodigo
                 }
                 if(args[0] == "-f" || args[0] == "-file")
                 {
-                    
-                    generateFile.CreateField(@"D:\01_Pruebas De GF", args[1]);
-                    generateFileMap.CreateField(@"D:\", args[1]);
+                    if (args.Length == 2)
+                    {
+                        generateFile.CreateField(args[0], args[1]);
+                        generateFileMap.CreateField(args[0], args[1]);
+                    }
+                    else
+                    {
+                        generateFileMap.CreateFieldAll(@"D:\01_Pruebas De GF\Mapa");
+                        generateFile.CreateFieldAll(@"D:\01_Pruebas De GF\Mapa");
+                    }
                 }
 
             }

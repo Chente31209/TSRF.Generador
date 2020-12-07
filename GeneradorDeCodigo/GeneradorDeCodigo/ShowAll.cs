@@ -63,6 +63,21 @@ namespace GeneradorDeCodigo
 
             }
         }
-        
+
+        public List<string> NameTable()
+        {
+            var lista = genetateTables.Generate().GroupBy(x => x.Titule).Select(x => x.FirstOrDefault());
+            List<string> Nombres = new List<string> { };
+            foreach (var i in lista)
+            {
+                Nombres.Add(i.Titule);
+            }
+            return Nombres;
+
+        }
+
+
+
+
     }
 }
