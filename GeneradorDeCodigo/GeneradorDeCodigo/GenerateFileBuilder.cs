@@ -6,30 +6,30 @@ using System.Globalization;
 
 namespace GeneradorDeCodigo
 {
-    public class GenerateFileEnty
+    public class GenerateFileBuilder  
     {
         IWriter _writer;
-        public GenerateFileEnty(IWriter writer)
+        public GenerateFileBuilder(IWriter writer)
         {
             this._writer = writer;
-
         }
        
         public void CreateField(string route, string Titulo)
         {
-            string CodigoGenerado = Codigo.ClassPropertis(Titulo,"Enty");
-            _writer.Writer(route, Titulo,"Enty", CodigoGenerado);
+            string CodigoMap = Codigo.CassBuilder(Titulo);
+            _writer.Writer(route, Titulo, "Builder", CodigoMap);
         }
         public void CreateFieldAll(string route)
         {
-            
             ShowAll showAll = new ShowAll();
-            foreach (var i in showAll.NameTable())
+            foreach(var i in showAll.NameTable())
             {
-                string CodigoGenerado = Codigo.ClassPropertis(i,"Enty");
-                _writer.Writer(route, i, "Enty", CodigoGenerado);
+                string CodigoMap = Codigo.CassBuilder(i);
+                _writer.Writer(route, i, "Map", CodigoMap);
             }
+
         }
-       
+        
+
     }
 }

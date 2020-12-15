@@ -7,12 +7,12 @@ namespace GeneradorDeCodigo
 {
     public static class Codigo
     {
-        public static string classEnty(string Titulo)
+        public static string ClassPropertis(string Titulo,string type)
         {
             List<string> Propiedades = new List<string> { };
-            GenerateEntity generateEntity = new GenerateEntity();
+            GeneratePropertis generateEntity = new GeneratePropertis();
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
-            string Enabesado = $"namespace <Nombre>{{\n public class {Nombre}Entity{{ ";
+            string Enabesado = $"namespace <Nombre>{{\n public class {Nombre}{type}{{ ";
             string Cuerpo = "";
             foreach(var i in generateEntity.Generate(Titulo))
             {
@@ -23,20 +23,22 @@ namespace GeneradorDeCodigo
             return Fll;
         }
 
-        public static string classMap(string Titulo)
+        public static string CassBuilder(string Titulo)
         {
-            GenetrateMap genetrateMap = new GenetrateMap();
+            GenetrateBuilder genetrateMap = new GenetrateBuilder();
 
             List<string> Propiedades = new List<string> { };
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
-            string Enabesado = $"Mappear (ModelBuilder modelBuilder){{ ";
+            string Enabesado = $"using System;\n using System.Collections.Generic; \n using System.Text;\nusing Microsoft.EntityFrameworkCore;\nusing Data.Contract.Entities; " +
+                $"namespace <Nombre>{{\n public static class {Nombre}Builder{{\n " +
+                $"public static void Mappear (ModelBuilder modelBuilder){{ ";
             string Cuerpo = "";
             foreach (var i in genetrateMap.Generate(Titulo))
             {
                 Propiedades.Add($"{i.Map} \n");
             }
             Cuerpo = String.Join(' ', Propiedades);
-            string Fll = $"{Enabesado}\n {Cuerpo}\n }}";
+            string Fll = $"{Enabesado}\n {Cuerpo}\n }}\n }}\n}}";
             return Fll;
         }
 

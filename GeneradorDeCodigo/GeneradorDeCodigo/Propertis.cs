@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GeneradorDeCodigo
 {
-    public class Entity
+    public class Propertis
     {
         public string TableEntity { get; set; }
         

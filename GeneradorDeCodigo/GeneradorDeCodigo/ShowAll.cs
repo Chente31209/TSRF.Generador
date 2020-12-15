@@ -7,10 +7,10 @@ namespace GeneradorDeCodigo
 {
     public class ShowAll
     {
-        GenerateEntity generateEntity = new GenerateEntity();
-        GenetrateMap genetrateMap = new GenetrateMap();
+        GeneratePropertis generateEntity = new GeneratePropertis();
+        GenetrateBuilder genetrateMap = new GenetrateBuilder();
         GenetateTables genetateTables = new GenetateTables();
-        GenerateFileEnty generateFileEnty = new GenerateFileEnty();
+       // GenerateFileEnty generateFileEnty = new GenerateFileEnty();
 
         /// <summary>
         /// Te Muestra Una vista prebia de el map a generar espesifiando el titulo de la tabla 
