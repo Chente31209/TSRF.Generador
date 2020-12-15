@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GeneradorDeCodigo": {
+      "commandName": "Project",
+      "commandLineArgs": "-f D:/ CLIENTES"
+    }
+  }
+}

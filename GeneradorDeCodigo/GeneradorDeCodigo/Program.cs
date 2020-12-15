@@ -9,8 +9,11 @@ namespace GeneradorDeCodigo
         {
             
             ShowAll showAll = new ShowAll();
-            GenerateFileEnty generateFile = new GenerateFileEnty();
-            GenerateFileMap generateFileMap = new GenerateFileMap();
+            IWriter writer = new FileCreate();
+            GenerateFileEnty generateFile = new GenerateFileEnty(writer);
+            GenerateFileBuilder generateFileMap = new GenerateFileBuilder(writer);
+            GenerateFileDto generateFileDto = new GenerateFileDto(writer);
+            GenerateFileModel generateFileModel = new GenerateFileModel(writer);
             if (args.Length == 0)
             {
                 Console.WriteLine($"Si no sabes como prosegir teclea -h o -help para ver las sentecias que exiten \n" +
@@ -48,11 +51,18 @@ namespace GeneradorDeCodigo
                 }
                 if(args[0] == "-f" || args[0] == "-file")
                 {
-                    if (args.Length == 2)
+                    if (args.Length == 3)
                     {
-                        generateFile.CreateField(args[0], args[1]);
-                        generateFileMap.CreateField(args[0], args[1]);
+                        generateFile.CreateField(args[1], args[2]);
+                        generateFileMap.CreateField(args[1], args[2]);
+                        generateFileDto.CreateField(args[1], args[2]);
+                        generateFileModel.CreateField(args[1], args[2]);
                     }
+                    /*if (args.Length == 2)
+                    {
+                        generateFile.CreateField(args[1], args[]);
+                        generateFileMap.CreateField(args[1], args[]);
+                    }*/
                     else
                     {
                         generateFileMap.CreateFieldAll(@"D:\01_Pruebas De GF\Mapa");
