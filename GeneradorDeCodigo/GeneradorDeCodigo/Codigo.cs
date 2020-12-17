@@ -12,7 +12,8 @@ namespace GeneradorDeCodigo
             List<string> Propiedades = new List<string> { };
             GeneratePropertis generateEntity = new GeneratePropertis();
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
-            string Enabesado = $"namespace <Nombre>{{\n public class {Nombre}{type}{{ ";
+            string Enabesado = $"using System;\n" +
+                $"namespace TRSF\n{{\n public class {Nombre}{type}\n{{ ";
             string Cuerpo = "";
             foreach(var i in generateEntity.Generate(Titulo))
             {
@@ -29,9 +30,9 @@ namespace GeneradorDeCodigo
 
             List<string> Propiedades = new List<string> { };
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
-            string Enabesado = $"using System;\n using System.Collections.Generic; \n using System.Text;\nusing Microsoft.EntityFrameworkCore;\nusing Data.Contract.Entities; " +
-                $"namespace <Nombre>{{\n public static class {Nombre}Builder{{\n " +
-                $"public static void Mappear (ModelBuilder modelBuilder){{ ";
+            string Enabesado = $"using System;\n using System.Collections.Generic; \n using System.Text;\nusing Microsoft.EntityFrameworkCore;\nusing Data.Contract.Entities; \n" +
+                $"namespace TRSF\n{{\n public static class {Nombre}Builder\n{{\n " +
+                $"public static void Builder (ModelBuilder modelBuilder)\n{{ ";
             string Cuerpo = "";
             foreach (var i in genetrateMap.Generate(Titulo))
             {

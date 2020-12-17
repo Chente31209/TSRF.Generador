@@ -17,8 +17,8 @@ namespace GeneradorDeCodigo
             var tables = LinqQueris.Tables(Titule);
             var key = LinqQueris.Keys(Titule);
 
-            
-            dBMaps.Add(new DBMap { Map = $"var {FormatWord.ParseMinusulas(Titule)} = modelBuilder.Entity<{Titule}Entity>();" });
+            var titule = FormatWord.ParseMinusulas(Titule);
+            dBMaps.Add(new DBMap { Map = $"var {FormatWord.ParseMinusulas(Titule)} = modelBuilder.Entity<{titule}Entity>();" });
             dBMaps.Add(new DBMap { Map = $"{FormatWord.ParseMinusulas(Titule)}.HasKey(x => x.{FormatWord.ParseMinusulas(key.Key)}).HasName(\"{key.Key}\");" });
             foreach (var i in tables)
             {
