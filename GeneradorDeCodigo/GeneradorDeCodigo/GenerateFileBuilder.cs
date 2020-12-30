@@ -8,24 +8,29 @@ namespace GeneradorDeCodigo
 {
     public class GenerateFileBuilder  
     {
-        IWriter _writer;
-        public GenerateFileBuilder(IWriter writer)
+        readonly IWriter _writer;
+        readonly IdbConnection _Idb;
+        public GenerateFileBuilder(IWriter writer, IdbConnection Idb)
         {
             this._writer = writer;
+            this._Idb = Idb;
         }
-       
+        
+
         public void CreateField(string route, string Titulo)
         {
-            string CodigoMap = Codigo.CassBuilder(Titulo);
+            Codigo codigo = new Codigo(_Idb);
+            string CodigoMap = codigo.CassBuilder(Titulo);
             _writer.Writer(route, Titulo, "Builder", CodigoMap);
         }
         public void CreateFieldAll(string route)
         {
-            ShowAll showAll = new ShowAll();
+            ShowAll showAll = new ShowAll(_Idb);
             foreach(var i in showAll.NameTable())
             {
-                string CodigoMap = Codigo.CassBuilder(i);
-                _writer.Writer(route, i, "Map", CodigoMap);
+                Codigo codigo = new Codigo(_Idb);
+                string CodigoMap = codigo.CassBuilder(i);
+                _writer.Writer(route, i, "Builder", CodigoMap);
             }
 
         }

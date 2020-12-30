@@ -4,8 +4,11 @@ using System.Text;
 
 namespace GeneradorDeCodigo
 {
-    public class GenerateKes
+    public class GenerateKes : ConnectionDB
     {
+       
+        public GenerateKes(IdbConnection idb) : base(idb)
+        { }
         public PrimariKey parse(string Columna)
         {
             var Key =Columna.Split("|");
@@ -13,9 +16,9 @@ namespace GeneradorDeCodigo
         }
         public List<PrimariKey> Gkeys()
         {
-            ConnectionDB connectionDB = new ConnectionDB();
+            
             List<PrimariKey> primariKeys = new List<PrimariKey> { };
-            foreach (var i in connectionDB.PrimaryKey(Sentences.PrimaryKey()))
+            foreach (var i in PrimaryKey(Sentences.PrimaryKey()))
             {
                 primariKeys.Add(parse(i));
             }

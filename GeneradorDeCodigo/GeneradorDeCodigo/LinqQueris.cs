@@ -6,20 +6,28 @@ using System.Linq;
 
 namespace GeneradorDeCodigo
 {
-   public  class LinqQueris
+   public   class LinqQueris
     {
-        public static  List<Tables> Tables(string tableTitule)
+        IdbConnection _idb;
+        public LinqQueris(IdbConnection idb)
         {
-            GenetateTables tables = new GenetateTables();
+            this._idb = idb;
+        }
+
+        public   List<Tables> Tables(string tableTitule)
+        {
+           // IdbConnection Idb = new ConnectionDB();
+            GenetateTables tables = new GenetateTables(_idb);
             var getTable = from table in tables.Generate()
                            where table.Titule.StartsWith(tableTitule)
                            select (table);
             
             return getTable.ToList();
         }
-        public static PrimariKey Keys(string tableTituleKey)
+        public  PrimariKey Keys(string tableTituleKey)
         {
-            GenerateKes generateKes = new GenerateKes();
+            //IdbConnection Idb = new ConnectionDB();
+            GenerateKes generateKes = new GenerateKes(_idb);
 
             var getTable = from table in generateKes.Gkeys()
                            where table.Titule.StartsWith(tableTituleKey)

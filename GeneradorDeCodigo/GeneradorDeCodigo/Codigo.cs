@@ -5,41 +5,46 @@ using System.Text;
 
 namespace GeneradorDeCodigo
 {
-    public static class Codigo
+    public  class Codigo
     {
-        public static string ClassPropertis(string Titulo,string type)
+        readonly IdbConnection _Idb;
+        public Codigo(IdbConnection Idb)
+        {
+            this._Idb = Idb;
+        }
+        public  string ClassPropertis(string Titulo,string type)
         {
             List<string> Propiedades = new List<string> { };
-            GeneratePropertis generateEntity = new GeneratePropertis();
+            GeneratePropertis generateEntity = new GeneratePropertis(_Idb);
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
             string Enabesado = $"using System;\n" +
-                $"namespace TRSF\n{{\n public class {Nombre}{type}\n{{ ";
+                $"namespace TRSF\n{{\n \tpublic class {Nombre}{type}\n\t{{\t ";
             string Cuerpo = "";
             foreach(var i in generateEntity.Generate(Titulo))
             {
-                Propiedades.Add($"{i.TableEntity} \n");
+                Propiedades.Add($"\t\t{i.TableEntity} \n");
             }
             Cuerpo = String.Join(' ', Propiedades);
-            string Fll = $"{Enabesado}\n {Cuerpo}\n }}\n}}";
+            string Fll = $"{Enabesado}\n {Cuerpo}\n \t}}\n}}";
             return Fll;
         }
 
-        public static string CassBuilder(string Titulo)
+        public  string CassBuilder(string Titulo)
         {
-            GenetrateBuilder genetrateMap = new GenetrateBuilder();
+            GenetrateBuilder genetrateMap = new GenetrateBuilder(_Idb);
 
             List<string> Propiedades = new List<string> { };
             var Nombre = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Titulo.ToLower());
             string Enabesado = $"using System;\n using System.Collections.Generic; \n using System.Text;\nusing Microsoft.EntityFrameworkCore;\nusing Data.Contract.Entities; \n" +
-                $"namespace TRSF\n{{\n public static class {Nombre}Builder\n{{\n " +
-                $"public static void Builder (ModelBuilder modelBuilder)\n{{ ";
+                $"namespace TRSF\n{{\n\t public static class {Nombre}Builder\n\t{{\n " +
+                $"\t\tpublic static void Builder (ModelBuilder modelBuilder)\n\t\t{{ ";
             string Cuerpo = "";
             foreach (var i in genetrateMap.Generate(Titulo))
             {
-                Propiedades.Add($"{i.Map} \n");
+                Propiedades.Add($"\t\t\t{i.Map} \n");
             }
             Cuerpo = String.Join(' ', Propiedades);
-            string Fll = $"{Enabesado}\n {Cuerpo}\n }}\n }}\n}}";
+            string Fll = $"{Enabesado}\n {Cuerpo}\n \t\t}}\n \t }}\n}}";
             return Fll;
         }
 

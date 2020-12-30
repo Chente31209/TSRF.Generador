@@ -9,25 +9,27 @@ namespace GeneradorDeCodigo
     public class GenerateFileEnty
     {
         IWriter _writer;
-        public GenerateFileEnty(IWriter writer)
+        IdbConnection _Idb;
+        public GenerateFileEnty(IWriter writer, IdbConnection Idb)
         {
             this._writer = writer;
-
+            this._Idb = Idb;
         }
-       
+        
         public void CreateField(string route, string Titulo)
         {
-            string CodigoGenerado = Codigo.ClassPropertis(Titulo,"Enty");
-            _writer.Writer(route, Titulo,"Enty", CodigoGenerado);
+            Codigo codigo = new Codigo(_Idb);
+            string CodigoGenerado = codigo.ClassPropertis(Titulo,"Entity");
+            _writer.Writer(route, Titulo,"Entity", CodigoGenerado);
         }
         public void CreateFieldAll(string route)
         {
-            
-            ShowAll showAll = new ShowAll();
+            Codigo codigo = new Codigo(_Idb);
+            ShowAll showAll = new ShowAll(_Idb);
             foreach (var i in showAll.NameTable())
             {
-                string CodigoGenerado = Codigo.ClassPropertis(i,"Enty");
-                _writer.Writer(route, i, "Enty", CodigoGenerado);
+                string CodigoGenerado = codigo.ClassPropertis(i,"Entity");
+                _writer.Writer(route, i, "Entity", CodigoGenerado);
             }
         }
        
