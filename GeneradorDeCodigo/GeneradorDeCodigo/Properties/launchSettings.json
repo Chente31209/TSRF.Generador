@@ -2,7 +2,7 @@
   "profiles": {
     "GeneradorDeCodigo": {
       "commandName": "Project",
-      "commandLineArgs": "-f D:\\PRUEBAWEBAPI.FDB  D:\\ DOCTOS_IN_DET_COMPRAS"
+      "commandLineArgs": "-f D:\\PRUEBAWEBAPI.FDB MON$ATTACHMENTS"
     }
   }
 }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using FirebirdSql.Data.FirebirdClient;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Logging.Console;
 
 namespace GeneradorDeCodigo
 {
@@ -14,43 +17,72 @@ namespace GeneradorDeCodigo
 		}
 		public List<String> ColumnDB(string sentecia)
 		{
-			var Row = new List<string> { };
-			using (var connection = _Idb.GetConnection()/*GetConnection(@"D:\PRUEBAWEBAPI.FDB", "sysdba", "masterkey")*/)
+			try
 			{
-				connection.Open();
-				using (var command = new FbCommand(sentecia, connection))
+				var Row = new List<string> { };
+				using (var connection = _Idb.GetConnection()/*GetConnection(@"D:\PRUEBAWEBAPI.FDB", "sysdba", "masterkey")*/)
 				{
-					using (var reader = command.ExecuteReader())
+					connection.Open();
+					using (var command = new FbCommand(sentecia, connection))
 					{
-						while (reader.Read())
+						using (var reader = command.ExecuteReader())
 						{
-							var values = new object[reader.FieldCount];
-							reader.GetValues(values);
-							Row.Add(string.Join("|", values));
+							while (reader.Read())
+							{
+								var values = new object[reader.FieldCount];
+								reader.GetValues(values);
+								Row.Add(string.Join("|", values));
+							}
 						}
 					}
+					connection.Close();
 				}
-				connection.Close();
+				return Row;
 			}
-			return Row;
+			catch(Exception e)
+            {
+				var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+				ILogger logger = loggerFactory.CreateLogger<Program>();
+
+				logger.LogError($"Ourrio un eroor en la Conecion \nTipo de error: {e.Message}");
+
+				throw;
+				//return null;
+            }
 		}
 		public List<String> Tabla(string sentecia)
 		{
 			var TablaRow = new List<String> { };
-			foreach (var i in ColumnDB(sentecia))
+			if (ColumnDB(sentecia) is null)
 			{
-				TablaRow.Add(i);
+				TablaRow.Add("Error");
+				return TablaRow;
 			}
-			return TablaRow;
+			else
+			{
+				foreach (var i in ColumnDB(sentecia))
+				{
+					TablaRow.Add(i);
+				}
+				return TablaRow;
+			}
 		}
 		public List<String> PrimaryKey(string sentecia)
 		{
 			var key = new List<String> { };
-			foreach (var i in ColumnDB(sentecia))
+			if (ColumnDB(sentecia) is null)
 			{
-				key.Add(i);
+				key.Add("Error");
+				return key;
 			}
-			return key;
+			else
+			{
+				foreach (var i in ColumnDB(sentecia))
+				{
+					key.Add(i);
+				}
+				return key;
+			}
 		}
 	}
 }
