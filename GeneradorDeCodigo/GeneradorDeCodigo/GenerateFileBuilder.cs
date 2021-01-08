@@ -28,9 +28,14 @@ namespace GeneradorDeCodigo
             ShowAll showAll = new ShowAll(_Idb);
             foreach(var i in showAll.NameTable())
             {
-                Codigo codigo = new Codigo(_Idb);
-                string CodigoMap = codigo.CassBuilder(i);
-                _writer.Writer(route, i, "Builder", CodigoMap);
+                if (i.Contains("RDB$"))
+                    Console.WriteLine("Salto de Tabla");
+                else
+                {
+                    Codigo codigo = new Codigo(_Idb);
+                    string CodigoMap = codigo.CassBuilder(i);
+                    _writer.Writer(route, i, "Builder", CodigoMap);
+                }
             }
 
         }

@@ -26,8 +26,13 @@ namespace GeneradorDeCodigo
             ShowAll showAll = new ShowAll(_Idb);
             foreach (var i in showAll.NameTable())
             {
-                string CodigoGenerado = codigo.ClassPropertis(i, "Dto");
-                _writer.Writer(route, i, "Dto", CodigoGenerado);
+                if (i.Contains("RDB$"))
+                    Console.WriteLine("Salto de Tabla");
+                else
+                {
+                    string CodigoGenerado = codigo.ClassPropertis(i, "Dto");
+                    _writer.Writer(route, i, "Dto", CodigoGenerado);
+                }
             }
         }
     }
