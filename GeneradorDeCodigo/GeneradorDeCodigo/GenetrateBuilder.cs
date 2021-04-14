@@ -64,8 +64,6 @@ namespace GeneradorDeCodigo
                     dBMaps.Add(new DBMap { Map = $"{FormatWord.ParseMinusulas(Titule)}.Property(x => x.{FormatWord.ParseMinusulas(i.Columns.ToLower())}).HasColumnName(\"{i.Columns}\");" });
                 }
                 dBMaps.Add(new DBMap { Map = $"{FormatWord.ParseMinusulas(Titule)}.ToTable(\"{Titule}\");" });
-                Console.WriteLine("se corrio el bulder " +
-                    "1");
                 return dBMaps;
                 
             }

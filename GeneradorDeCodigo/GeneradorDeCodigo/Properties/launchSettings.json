@@ -2,7 +2,7 @@
   "profiles": {
     "GeneradorDeCodigo": {
       "commandName": "Project",
-      "commandLineArgs": "-f D:\\PRUEBAWEBAPI.FDB MON$ATTACHMENTS"
+      "commandLineArgs": "-f D:\\PRUEBAWEBAPI.FDB POLIZAS_CFDI D:\\"
     }
   }
 }
